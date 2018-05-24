@@ -1,0 +1,13 @@
+[ignore]
+
+[include]
+
+[libs]
+
+[lints]
+all=warn
+
+[options]
+esproposal.export_star_as=enable
+
+[strict]

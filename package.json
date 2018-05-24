@@ -1,0 +1,45 @@
+{
+  "name": "natali",
+  "version": "1.0.0",
+  "description": "The PR Review Bot that doesn't make friends.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel -Dd lib src --delete-dir-on-start",
+    "build:watch": "npm run -s build -- --watch",
+    "lint": "eslint 'src/**/*.{js,jsx}'",
+    "prettier": "prettier 'src/**/*.{js,jsx,md}'",
+    "postinstall": "npm run build"
+  },
+  "author": "Tom Lingham <tjlingham@gmail.com>",
+  "license": "MIT",
+  "bin": {
+    "natali": "./bin/natali"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.48",
+    "@babel/core": "^7.0.0-beta.48",
+    "@babel/plugin-proposal-export-namespace-from": "^7.0.0-beta.48",
+    "@babel/plugin-proposal-pipeline-operator": "^7.0.0-beta.48",
+    "@babel/preset-env": "^7.0.0-beta.48",
+    "@babel/preset-flow": "^7.0.0-beta.48",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^8.2.3",
+    "babel-jest": "^23.0.0",
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "flow-bin": "^0.72.0",
+    "flow-typed": "^2.4.0",
+    "jest": "^23.0.0",
+    "prettier": "^1.12.1"
+  },
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "detect-indent": "^5.0.0",
+    "globby": "^8.0.1",
+    "js-yaml": "^3.11.0",
+    "mustache": "^2.3.0",
+    "ramda": "^0.25.0",
+    "yargs": "^11.1.0"
+  }
+}
