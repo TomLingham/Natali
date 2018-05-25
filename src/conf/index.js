@@ -4,15 +4,12 @@ import yaml from "js-yaml";
 import createConfigLoader from "./configLoader";
 import { file } from "../utils/io";
 
-type JsonValue =
-  | number
-  | string
-  | boolean
-  | null
-  | JsonValue[]
-  | ({ [string]: JsonValue } & { $call?: void });
-
 export type NataliConfig = {
+  pullRequestId: string,
+  provider: {
+    name: string,
+    config: { [string]: mixed }
+  },
   rules: {
     [string]: { config: JsonValue, template?: string }
   }

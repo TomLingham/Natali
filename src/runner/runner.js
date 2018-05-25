@@ -3,6 +3,7 @@
 import path from "path";
 import { type NataliConfig } from "../conf";
 import { type IGitModule } from "../git";
+import type { IProviderFactory } from "../providers/types";
 import { type IRulesModule } from ".";
 import * as rules from "../rules";
 import { template } from "../utils";
@@ -10,15 +11,29 @@ import { type IPrFail } from "../rules";
 import { conf } from "../conf";
 
 type Dependencies = {
-  git: IGitModule
+  git: IGitModule,
+  providers: { [string]: IProviderFactory }
 };
 
-export default function createRulesModule({ git }: Dependencies): IRulesModule {
-  async function run(nataliConfig: NataliConfig) {
+const NATALI_TAG = "[--NATALI:BOT--]";
+
+function isNataliComment(comment: any) {
+  return comment.content && comment.content.endsWith(NATALI_TAG);
+}
+
+export default function createRulesModule({
+  git,
+  providers
+}: Dependencies): IRulesModule {
+  async function run(nataliConfig: NataliConfig): Promise<mixed> {
     const runningRules: Promise<{
       result: rules.IPrResult,
       templatePath: string
     }>[] = [];
+
+    const provider = providers[nataliConfig.provider.name].create(
+      nataliConfig.provider.config
+    );
 
     for (let ruleName in nataliConfig.rules) {
       const { handler, templatePath } = rules[ruleName];
@@ -36,6 +51,7 @@ export default function createRulesModule({ git }: Dependencies): IRulesModule {
     }
 
     const results = await Promise.all(runningRules);
+
     const failures: {
       result: IPrFail,
       templatePath: string
@@ -46,7 +62,27 @@ export default function createRulesModule({ git }: Dependencies): IRulesModule {
         template.render(templatePath, result.data)
       )
     );
-    comments.forEach(x => console.log("\n\n\n", x));
+
+    const previousComment = await provider
+      .getPrComments(nataliConfig.pullRequestId)
+      .then(coms => coms.find(isNataliComment));
+
+    const comment = comments.concat(NATALI_TAG).join("\n\n\n----\n\n");
+
+    if (previousComment && failures.length === 0) {
+      provider.deletePrComment(
+        nataliConfig.pullRequestId,
+        previousComment.comment_id
+      );
+    } else if (previousComment) {
+      provider.updatePrComment(
+        nataliConfig.pullRequestId,
+        previousComment.comment_id,
+        comment
+      );
+    } else if (!previousComment && failures.length > 0) {
+      provider.submitPrComment(nataliConfig.pullRequestId, comment);
+    }
   }
 
   return {

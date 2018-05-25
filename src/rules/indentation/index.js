@@ -16,7 +16,6 @@ export const handler: IPrRule = async (config = [], templatePath) => {
   const violations = [];
 
   for (let indentRule of config) {
-    console.log('RULE', indentRule);
     const files = await globby([indentRule.glob, "!**/node_modules"], {
       gitignore: true
     });

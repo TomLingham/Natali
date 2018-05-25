@@ -6,6 +6,7 @@ import yargs from "yargs";
 
 import { conf } from "./conf";
 import { runner } from "./runner";
+import { BitBucketCloud } from "./providers/BitBucketCloud";
 
 const kamoji = {
   anguish: "(#><)",
@@ -13,28 +14,40 @@ const kamoji = {
   happy: "(o^▽^o)"
 };
 
-yargs.command({
-  command: "run [configPath]",
-  aliases: ["* [configPath]"],
-  desc: "Run the violation check with the provided config.",
-  handler: async ({ configPath = "natali.yaml" }) => {
-    console.log(
-      chalk.bold.cyan(kamoji.happy),
-      "Kindly inspecting your code. Please wait..."
-    );
+yargs
+  .option("pullrequest", {
+    alias: "p",
+    describe: "The pull request or change ID associated with the pull request.",
+    demandOption: true,
+    requiresArg: true
+  })
+  .command({
+    command: "run [configPath]",
+    aliases: ["* [configPath]"],
+    desc: "Run the violation check with the provided config.",
+    handler: async ({ configPath = "natali.yaml", pullrequest }) => {
+      if (!pullrequest) {
+        process.exit(1);
+      }
 
-    await conf
-      .load(path.resolve(process.cwd(), configPath))
-      .then(runner.run)
-      .catch(error => {
-        console.error(
-          chalk.red("Error:"),
-          error.message,
-          chalk.red(kamoji.embarrased)
-        );
-      });
-  }
-});
+      console.log(
+        chalk.bold.cyan(kamoji.happy),
+        "Kindly inspecting your code. Please wait..."
+      );
+
+      await conf
+        .load(path.resolve(process.cwd(), configPath))
+        .then(config => ({ ...config, pullRequestId: pullrequest }))
+        .then(runner.run)
+        .catch(error => {
+          console.error(
+            chalk.red("Error:"),
+            error.message,
+            chalk.red(kamoji.embarrased)
+          );
+        });
+    }
+  });
 
 /**
  * Generate help and output argv
