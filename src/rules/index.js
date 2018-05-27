@@ -1,6 +1,6 @@
 // @flow
 
-export type IPrFail = { pass: false, data: { [string]: mixed }};
+export type IPrFail = { pass: false, data: { [string]: mixed } };
 export type IPrSuccess = { pass: true };
 export type IPrResult = IPrFail | IPrSuccess;
 

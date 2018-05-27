@@ -8,9 +8,7 @@ type Dependencies = {
   spawn: (string, string[], Object) => ChildProcess
 };
 
-export function createProcModule({
-  spawn
-}: Dependencies): IProcModule {
+export function createProcModule({ spawn }: Dependencies): IProcModule {
   function spawnp(
     command: string,
     args: string[],

@@ -7,7 +7,7 @@
     "build": "babel -Dd lib src --delete-dir-on-start",
     "build:watch": "npm run -s build -- --watch",
     "lint": "eslint 'src/**/*.{js,jsx}'",
-    "prettier": "prettier 'src/**/*.{js,jsx,md}'",
+    "prettier": "prettier 'src/**/*.{js,jsx,md}' --write",
     "postinstall": "npm run build"
   },
   "author": "Tom Lingham <tjlingham@gmail.com>",

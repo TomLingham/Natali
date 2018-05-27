@@ -28,7 +28,7 @@ export const handler: IPrRule = async (config = [], templatePath) => {
 
         // We can't reliably detect code that has block comments in it as it raises a
         // false negative, so we just ignore it.
-        if (amount === 1 && type === 'space') continue;
+        if (amount === 1 && type === "space") continue;
 
         // If the indentation cannot be detected, exit early.
         if (!type) continue;
