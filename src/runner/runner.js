@@ -4,7 +4,7 @@ import path from "path";
 import * as rules from "../rules";
 import { template } from "../utils";
 import { conf } from "../conf";
-import { natali } from "../logging";
+import { natali, logger } from "../logging";
 import type { IPrFail } from "../rules";
 import type { IProviderFactory } from "../providers/types";
 import type { IRulesModule } from ".";

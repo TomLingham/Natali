@@ -8,3 +8,4 @@ export type IPrRule = (config: Object) => Promise<IPrResult>;
 
 export * as commitCount from "./commitCount";
 export * as indentation from "./indentation";
+export * as stringMatch from "./stringMatch";
