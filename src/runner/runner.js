@@ -2,7 +2,6 @@
 
 import path from "path";
 import { type NataliConfig } from "../conf";
-import { type IGitModule } from "../git";
 import type { IProviderFactory } from "../providers/types";
 import { type IRulesModule } from ".";
 import * as rules from "../rules";
@@ -10,10 +9,9 @@ import { template } from "../utils";
 import { type IPrFail } from "../rules";
 import { conf } from "../conf";
 
-type Dependencies = {
-  git: IGitModule,
+type Dependencies = {|
   providers: { [string]: IProviderFactory }
-};
+|};
 
 const NATALI_TAG = "[--NATALI:BOT--]";
 
@@ -22,7 +20,6 @@ function isNataliComment(comment: any) {
 }
 
 export default function createRulesModule({
-  git,
   providers
 }: Dependencies): IRulesModule {
   async function run(nataliConfig: NataliConfig): Promise<mixed> {

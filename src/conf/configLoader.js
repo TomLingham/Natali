@@ -1,7 +1,7 @@
 // @flow
 
 import path from "path";
-import type { NataliConfig, IConfigLoader } from ".";
+import type { NataliConfig } from ".";
 import type { ITemplateModule } from "../utils";
 
 type Dependencies = {|
@@ -11,15 +11,12 @@ type Dependencies = {|
 
 let CONF_PATH;
 
-export default function createConfigLoader({
-  yaml,
-  template
-}: Dependencies): IConfigLoader {
+export default function createConfigLoader({ yaml, template }: Dependencies) {
   function setCwd(configPath) {
     CONF_PATH = configPath;
   }
 
-  function cwd() {
+  function cwd(): string {
     return path.dirname(CONF_PATH);
   }
 

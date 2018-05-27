@@ -6,7 +6,6 @@ import yargs from "yargs";
 
 import { conf } from "./conf";
 import { runner } from "./runner";
-import { BitBucketCloud } from "./providers/BitBucketCloud";
 
 const kamoji = {
   anguish: "(#><)",

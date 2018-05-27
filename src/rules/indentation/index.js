@@ -3,16 +3,13 @@
 import detectIndent from "detect-indent";
 import path from "path";
 import globby from "globby";
-import { git } from "../../git";
-import { proc } from "../../utils";
 import { file as File } from "../../utils/io";
 import * as assert from "../assert";
 import type { IPrRule } from "..";
-import { conf } from "../../conf";
 
 export const templatePath = path.resolve(__dirname, "violation.md");
 
-export const handler: IPrRule = async (config = [], templatePath) => {
+export const handler: IPrRule = async (config = []) => {
   const violations = [];
 
   for (let indentRule of config) {
@@ -22,7 +19,7 @@ export const handler: IPrRule = async (config = [], templatePath) => {
 
     for (let file of files) {
       try {
-        const { indent, type, amount } = detectIndent(
+        const { type, amount } = detectIndent(
           await File.readFile(path.resolve(file))
         );
 

@@ -2,7 +2,6 @@
 
 import path from "path";
 import { git } from "../../git";
-import { proc } from "../../utils";
 import * as assert from "../assert";
 import type { IPrRule } from "..";
 

@@ -1,12 +1,17 @@
 {
   "parser": "babel-eslint",
   "extends": ["plugin:prettier/recommended", "eslint:recommended"],
+  "plugins": [
+    "flowtype"
+  ],
   "env": {
     "node": true,
     "es6": true
   },
   "rules": {
     "no-console": "off",
-    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "flowtype/define-flow-type": 1,
+    "flowtype/use-flow-type": 1
   }
 }

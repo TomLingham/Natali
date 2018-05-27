@@ -22,20 +22,23 @@
     "@babel/preset-env": "^7.0.0-beta.48",
     "@babel/preset-flow": "^7.0.0-beta.48",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^8.2.3",
-    "babel-jest": "^23.0.0",
-    "eslint": "^4.19.1",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-prettier": "^2.6.0",
-    "flow-bin": "^0.72.0",
-    "flow-typed": "^2.4.0",
-    "jest": "^23.0.0",
-    "prettier": "^1.12.1",
     "chalk": "^2.4.1",
     "detect-indent": "^5.0.0",
     "globby": "^8.0.1",
     "js-yaml": "^3.11.0",
     "mustache": "^2.3.0",
     "yargs": "^11.1.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.3",
+    "babel-jest": "^23.0.0",
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-flowtype": "^2.47.1",
+    "eslint-plugin-prettier": "^2.6.0",
+    "flow-bin": "^0.72.0",
+    "flow-typed": "^2.4.0",
+    "jest": "^23.0.0",
+    "prettier": "^1.12.1"
   }
 }
