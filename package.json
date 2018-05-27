@@ -15,12 +15,12 @@
     "natali": "./bin/natali"
   },
   "dependencies": {
-    "@babel/cli": "^7.0.0-beta.48",
-    "@babel/core": "^7.0.0-beta.48",
-    "@babel/plugin-proposal-export-namespace-from": "^7.0.0-beta.48",
-    "@babel/plugin-proposal-pipeline-operator": "^7.0.0-beta.48",
-    "@babel/preset-env": "^7.0.0-beta.48",
-    "@babel/preset-flow": "^7.0.0-beta.48",
+    "@babel/cli": "^7.0.0-beta.49",
+    "@babel/core": "^7.0.0-beta.49",
+    "@babel/plugin-proposal-export-namespace-from": "^7.0.0-beta.49",
+    "@babel/plugin-proposal-pipeline-operator": "^7.0.0-beta.49",
+    "@babel/preset-env": "^7.0.0-beta.49",
+    "@babel/preset-flow": "^7.0.0-beta.49",
     "babel-core": "^7.0.0-bridge.0",
     "chalk": "^2.4.1",
     "detect-indent": "^5.0.0",
