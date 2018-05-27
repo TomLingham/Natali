@@ -7,9 +7,9 @@ const BITBUCKET_API_VERSION = "1.0";
 const BITBUCKET_URI = "https://api.bitbucket.org";
 const BASE_URL = `${BITBUCKET_URI}/${BITBUCKET_API_VERSION}`;
 
-type Dependencies = {
+type Dependencies = {|
   api: IHttpClient
-};
+|};
 
 type BitBucketConfig = {
   org: string,

@@ -2,10 +2,15 @@
 
 import chalk from "chalk";
 import type { ChildProcess } from "child_process";
-import type { ProcessResult } from ".";
 
-type Dependencies = {
+type Dependencies = {|
   spawn: (string, string[], Object) => ChildProcess
+|};
+
+export type ProcessResult = {
+  code: number,
+  stdout: string,
+  stderr: string
 };
 
 export function createProcModule({ spawn }: Dependencies) {

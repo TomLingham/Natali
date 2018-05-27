@@ -1,10 +1,10 @@
 // @flow
 
-import fs from "fs";
+import typeof { readFile } from "fs";
 
-type Dependencies = {
-  fs: { readFile: typeof fs.readFile }
-};
+type Dependencies = {|
+  fs: { readFile: readFile }
+|};
 
 export function createFileModule({ fs }: Dependencies) {
   function readFile(path: string): Promise<string> {

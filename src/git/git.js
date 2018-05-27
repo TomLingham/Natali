@@ -2,9 +2,9 @@
 
 import type { IProcess } from "../utils";
 
-type Dependencies = {
+type Dependencies = {|
   proc: IProcess
-};
+|};
 
 export default function createGitModule({ proc }: Dependencies) {
   async function getBranchName(): Promise<string> {

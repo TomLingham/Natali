@@ -2,9 +2,9 @@
 
 import typeof request from "request";
 
-type Dependencies = {
+type Dependencies = {|
   request: request
-};
+|};
 
 type RequestOptions = { [string]: mixed };
 
