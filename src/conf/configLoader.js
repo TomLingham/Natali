@@ -2,12 +2,14 @@
 
 import path from "path";
 import type { NataliConfig } from ".";
-import type { ITemplateModule } from "../utils";
+import type { ITemplateRenderer } from "../utils";
 
 type Dependencies = {|
-  template: ITemplateModule,
+  template: ITemplateRenderer,
   yaml: { safeLoad: string => Object }
 |};
+
+const ENV_VARS: { [string]: any } = process.env;
 
 let CONF_PATH;
 
@@ -23,7 +25,7 @@ export default function createConfigLoader({ yaml, template }: Dependencies) {
   async function load(filePath: string): Promise<NataliConfig> {
     let configFile;
     try {
-      configFile = await template.render(filePath, process.env);
+      configFile = await template.render(filePath, ENV_VARS);
       setCwd(filePath);
     } catch (error) {
       throw new Error("There was no configuration file found");

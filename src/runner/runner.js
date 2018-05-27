@@ -1,13 +1,13 @@
 // @flow
 
 import path from "path";
-import { type NataliConfig } from "../conf";
-import type { IProviderFactory } from "../providers/types";
-import { type IRulesModule } from ".";
 import * as rules from "../rules";
 import { template } from "../utils";
-import { type IPrFail } from "../rules";
 import { conf } from "../conf";
+import type { IPrFail } from "../rules";
+import type { IProviderFactory } from "../providers/types";
+import type { IRulesModule } from ".";
+import type { NataliConfig } from "../conf";
 
 type Dependencies = {|
   providers: { [string]: IProviderFactory }
@@ -15,8 +15,12 @@ type Dependencies = {|
 
 const NATALI_TAG = "[--NATALI:BOT--]";
 
-function isNataliComment(comment: any) {
-  return comment.content && comment.content.endsWith(NATALI_TAG);
+function isNataliComment<T>(comment: T): boolean {
+  if (comment && comment.content && typeof comment.content === "string") {
+    return comment.content && comment.content.endsWith(NATALI_TAG);
+  }
+
+  return false;
 }
 
 export default function createRulesModule({
@@ -60,7 +64,8 @@ export default function createRulesModule({
       )
     );
 
-    const previousComment = await provider
+    // TODO no any's please!
+    const previousComment: any = await provider
       .getPrComments(nataliConfig.pullRequestId)
       .then(coms => coms.find(isNataliComment));
 

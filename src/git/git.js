@@ -1,14 +1,13 @@
 // @flow
 
-import { type IProcModule } from "../utils";
-import { type IGitModule } from ".";
+import type { IProcess } from "../utils";
 
 type Dependencies = {
-  proc: IProcModule
+  proc: IProcess
 };
 
-export default function createGitModule({ proc }: Dependencies): IGitModule {
-  async function getBranchName() {
+export default function createGitModule({ proc }: Dependencies) {
+  async function getBranchName(): Promise<string> {
     const { stdout: branchName } = await proc.spawnp("git", [
       "rev-parse",
       "--abbrev-ref",

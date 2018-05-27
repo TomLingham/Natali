@@ -12,13 +12,8 @@ export type ProcessResult = {
   stderr: string
 };
 
-export interface IProcModule {
-  spawnp: (string, string[], options?: Object) => Promise<ProcessResult>;
-}
-
-export interface ITemplateModule {
-  render: (path: string, { [string]: any }) => Promise<string>;
-}
-
 export const proc = createProcModule({ spawn });
 export const template = createTemplateModule({ file });
+
+export type IProcess = typeof proc;
+export type ITemplateRenderer = typeof template;

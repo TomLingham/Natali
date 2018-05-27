@@ -1,13 +1,14 @@
 // @flow
 
 import typeof request from "request";
-import type { IHttpClientModule } from ".";
 
 type Dependencies = {
   request: request
 };
 
-export function createHttpClient({ request }: Dependencies): IHttpClientModule {
+type RequestOptions = { [string]: mixed };
+
+export function createHttpClient({ request }: Dependencies) {
   const rp = (uri, options) => {
     return new Promise((resolve, reject) => {
       request(uri, { ...options, json: true }, (error, response) => {
@@ -17,16 +18,29 @@ export function createHttpClient({ request }: Dependencies): IHttpClientModule {
     });
   };
 
-  const get = (url: string, opts: mixed) => rp(url, { ...opts, method: "GET" });
+  function get<T: JsonValue>(url: string, opts: RequestOptions): Promise<T> {
+    return rp(url, { ...opts, method: "GET" });
+  }
 
-  const post = (url: string, body: JsonValue, opts: mixed) =>
-    rp(url, { ...opts, method: "POST", body });
+  function del<T: JsonValue>(url: string, opts: RequestOptions): Promise<T> {
+    return rp(url, { ...opts, method: "DELETE" });
+  }
 
-  const put = (url: string, body: JsonValue, opts: mixed) =>
-    rp(url, { ...opts, method: "PUT", body });
+  function post<T: JsonValue>(
+    url: string,
+    body: JsonValue,
+    opts: RequestOptions
+  ): Promise<T> {
+    return rp(url, { ...opts, method: "POST", body });
+  }
 
-  const del = (url: string, opts: mixed) =>
-    rp(url, { ...opts, method: "DELETE" });
+  function put<T: JsonValue>(
+    url: string,
+    body: JsonValue,
+    opts: RequestOptions
+  ): Promise<T> {
+    return rp(url, { ...opts, method: "PUT", body });
+  }
 
   return { post, get, put, del };
 }

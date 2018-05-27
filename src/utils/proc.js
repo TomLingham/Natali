@@ -1,14 +1,14 @@
 // @flow
 
 import chalk from "chalk";
-import { type ChildProcess } from "child_process";
-import { type ProcessResult, IProcModule } from ".";
+import type { ChildProcess } from "child_process";
+import type { ProcessResult } from ".";
 
 type Dependencies = {
   spawn: (string, string[], Object) => ChildProcess
 };
 
-export function createProcModule({ spawn }: Dependencies): IProcModule {
+export function createProcModule({ spawn }: Dependencies) {
   function spawnp(
     command: string,
     args: string[],

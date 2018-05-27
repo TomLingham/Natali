@@ -1,15 +1,14 @@
 // @flow
 
 const mustache = require("mustache");
-import { type ITemplateModule } from ".";
-import { type FileModule } from "./io";
+import type { IFile } from "./io";
 
 type Dependencies = {
-  file: FileModule
+  file: IFile
 };
 
-export function createTemplateModule({ file }: Dependencies): ITemplateModule {
-  async function render(filePath, vars) {
+export function createTemplateModule({ file }: Dependencies) {
+  async function render(filePath: string, vars: { [string]: mixed }) {
     const templateFile = await file.readFile(filePath);
     return mustache.render(templateFile, vars);
   }

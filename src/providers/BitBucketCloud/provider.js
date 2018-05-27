@@ -1,15 +1,14 @@
 // @flow
 
-import type { IHttpClientModule } from "../../utils/http";
+import type { IHttpClient } from "../../utils/http";
 import type { IProvider, IProviderFactory } from "../types";
 
 const BITBUCKET_API_VERSION = "1.0";
 const BITBUCKET_URI = "https://api.bitbucket.org";
-
 const BASE_URL = `${BITBUCKET_URI}/${BITBUCKET_API_VERSION}`;
 
 type Dependencies = {
-  api: IHttpClientModule
+  api: IHttpClient
 };
 
 type BitBucketConfig = {
@@ -41,7 +40,10 @@ export function createBitBucketCloudProvider({
         "repositories",
         `pullrequests/${pullRequestId}/comments`
       );
-      return api.get(url, { auth });
+
+      // Screw this stupid line!
+      // prettier-ignore
+      return api.get<Array<JsonValue>>(url, { auth }); // eslint-disable-line
     }
 
     function updatePrComment(

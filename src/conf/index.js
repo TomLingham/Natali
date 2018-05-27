@@ -15,9 +15,4 @@ export type NataliConfig = {
   }
 };
 
-export interface IConfigLoader {
-  load: string => Promise<NataliConfig>;
-  cwd: () => string;
-}
-
 export const conf = createConfigLoader({ yaml, template });

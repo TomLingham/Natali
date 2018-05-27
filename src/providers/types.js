@@ -1,14 +1,14 @@
 // @flow
 
 export interface IProvider {
-  getPrComments(pullRequestId: string): Promise<any[]>;
-  deletePrComment(pullRequestId: string, commentId: string): Promise<any>;
-  submitPrComment(pullRequestId: string, comment: string): Promise<any>;
+  getPrComments(pullRequestId: string): Promise<JsonValue[]>;
+  deletePrComment(pullRequestId: string, commentId: string): Promise<JsonValue>;
+  submitPrComment(pullRequestId: string, comment: string): Promise<JsonValue>;
   updatePrComment(
     pullRequestId: string,
     commentId: string,
     comment: string
-  ): Promise<any>;
+  ): Promise<JsonValue>;
 }
 
 export type IProviderFactory = {

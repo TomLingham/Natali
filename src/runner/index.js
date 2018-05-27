@@ -1,8 +1,8 @@
 // @flow
 
 import createRulesModule from "./runner";
-import { type NataliConfig } from "../conf";
 import * as providers from "../providers";
+import type { NataliConfig } from "../conf";
 
 export interface IRulesModule {
   run: NataliConfig => Promise<any>;
