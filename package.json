@@ -2,6 +2,10 @@
   "name": "natali",
   "version": "1.1.0",
   "description": "The PR Review Bot that doesn't make friends.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TomLingham/Natali"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel -Dd lib src --delete-dir-on-start",
