@@ -3,6 +3,7 @@
 import yaml from "js-yaml";
 import createConfigLoader from "./configLoader";
 import { file } from "../utils/io";
+import { template } from "../utils";
 
 export type NataliConfig = {
   pullRequestId: string,
@@ -20,4 +21,4 @@ export interface IConfigLoader {
   cwd: () => string;
 }
 
-export const conf = createConfigLoader({ file, yaml });
+export const conf = createConfigLoader({ yaml, template });

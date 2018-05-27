@@ -17,7 +17,7 @@ export interface IProcModule {
 }
 
 export interface ITemplateModule {
-  render: (path: string, { [string]: mixed }) => Promise<string>;
+  render: (path: string, { [string]: any }) => Promise<string>;
 }
 
 export const proc = createProcModule({ spawn });
