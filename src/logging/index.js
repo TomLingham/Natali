@@ -60,7 +60,7 @@ function formatNatali(level, ...messages) {
 
 export const logger = LogDriver({
   levels: ["fail", "error", "warn", "info", "debug", "silly"],
-  level: process.env.LOG_LEVEL || "debug",
+  level: process.env.LOG_LEVEL || "info",
   format: formatLogging
 });
 
