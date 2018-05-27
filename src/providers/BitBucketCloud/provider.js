@@ -23,7 +23,7 @@ export function createBitBucketCloudProvider({
   api
 }: Dependencies): IProviderFactory {
   function create({ org, user, pass, repo }: BitBucketConfig): IProvider {
-    const auth = { user: process.env[user], pass: process.env[pass] };
+    const auth = { user, pass };
 
     const createResource = (resource, path) =>
       `${BASE_URL}/${resource}/${org}/${repo}/${path}/`;
