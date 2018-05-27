@@ -1,17 +1,12 @@
 // @flow
 
-import chalk from "chalk";
 import path from "path";
 import yargs from "yargs";
 
 import { conf } from "./conf";
 import { runner } from "./runner";
 
-const kamoji = {
-  anguish: "(#><)",
-  embarrased: "(⌒_⌒;)",
-  happy: "(o^▽^o)"
-};
+import { logger, natali } from "./logging";
 
 yargs
   .option("pullrequest", {
@@ -29,21 +24,15 @@ yargs
         process.exit(1);
       }
 
-      console.log(
-        chalk.bold.cyan(kamoji.happy),
-        "Kindly inspecting your code. Please wait..."
-      );
+      natali.nervous("Kindly inspecting your code. Please wait...");
 
       await conf
         .load(path.resolve(process.cwd(), configPath))
         .then(config => ({ ...config, pullRequestId: pullrequest }))
         .then(runner.run)
         .catch(error => {
-          console.error(
-            chalk.red("Error:"),
-            error.message,
-            chalk.red(kamoji.embarrased)
-          );
+          natali.anguish("Oh no!", error);
+          logger.error(error.stack);
         });
     }
   });
@@ -59,9 +48,7 @@ yargs
 /**
  * On fail, print generic error and dump the error as well
  */
-yargs.fail((message, err) =>
-  console.error(chalk.red(kamoji.anguish), message, err)
-);
+yargs.fail((message, error) => natali.sad(message, error));
 
 /**
  * Print out the arguments

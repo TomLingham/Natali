@@ -30,6 +30,7 @@
     "detect-indent": "^5.0.0",
     "globby": "^8.0.1",
     "js-yaml": "^3.11.0",
+    "log-driver": "^1.2.7",
     "mustache": "^2.3.0",
     "yargs": "^11.1.0"
   },
