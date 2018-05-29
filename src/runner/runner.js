@@ -97,7 +97,14 @@ export default function createRulesModule({
     const comment = comments.concat(NATALI_TAG).join("\n\n----\n\n");
 
     if (!nataliConfig.pullRequestId) {
-      comments.map((co, i) => console.log(`\n\n${i + 1}) ${co}----------\n`));
+      if (failures.length > 0) {
+        natali.sad(
+          "I'm sorry. There are a few things that need to be done before this branch can be merged."
+        );
+        comments.map((co, i) => console.log(`\n\n${i + 1}) ${co}----------\n`));
+      } else {
+        natali.happy("Wow! Branch looks good to me! Should be OK to merge.");
+      }
       return;
     }
 

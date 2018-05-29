@@ -28,7 +28,7 @@ yargs
         .load(path.resolve(process.cwd(), configPath))
         .then(config => ({ ...config, pullRequestId: pullrequest }))
         .then(runner.run)
-        .then(() => natali.happy("I'm done. Thank you!"))
+        .then(() => natali.happy("Bye!"))
         .catch(error => {
           natali.anguish("Oh no!", error);
           logger.error(error.stack);
