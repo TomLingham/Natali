@@ -4,14 +4,16 @@ import path from "path";
 import * as rules from "../rules";
 import { template } from "../utils";
 import { conf } from "../conf";
-import { natali, logger } from "../logging";
+import { natali } from "../logging";
 import type { IPrFail } from "../rules";
 import type { IProviderFactory } from "../providers/types";
 import type { IRulesModule } from ".";
 import type { NataliConfig } from "../conf";
+import type { IGit } from "../git";
 
 type Dependencies = {|
-  providers: { [string]: IProviderFactory }
+  providers: { [string]: IProviderFactory },
+  git: IGit
 |};
 
 const NATALI_TAG = "[--NATALI:BOT--]";
@@ -25,18 +27,32 @@ function isNataliComment<T>(comment: T): boolean {
 }
 
 export default function createRulesModule({
-  providers
+  providers,
+  git
 }: Dependencies): IRulesModule {
+  async function precheck(config: NataliConfig): Promise<boolean> {
+    const currentBranchName = await git.getBranchName();
+    if (config.repository && config.repository.ignore) {
+      const ignorePattern = config.repository.ignore;
+      const ignoreBranchRegex = new RegExp(ignorePattern);
+      if (ignoreBranchRegex.test(currentBranchName)) {
+        natali.happy(
+          `Running on a branch matching the ignore pattern: '${currentBranchName}' matches /${ignorePattern}/.`
+        );
+        return true;
+      }
+    }
+    return false;
+  }
+
   async function run(nataliConfig: NataliConfig): Promise<mixed> {
+    if (await precheck(nataliConfig)) return;
+
     const runningRules: Promise<{
       name: string,
       result: rules.IPrResult,
       templatePath: string
     }>[] = [];
-
-    const provider = providers[nataliConfig.provider.name].create(
-      nataliConfig.provider.config
-    );
 
     for (let ruleName in nataliConfig.rules) {
       const { handler, templatePath } = rules[ruleName];
@@ -74,12 +90,21 @@ export default function createRulesModule({
       natali.ashamed(`I sorry. The ${name} rule was broke.`);
     });
 
+    const provider = providers[nataliConfig.provider.name].create(
+      nataliConfig.provider.config
+    );
+
+    const comment = comments.concat(NATALI_TAG).join("\n\n----\n\n");
+
+    if (!nataliConfig.pullRequestId) {
+      comments.map((co, i) => console.log(`\n\n${i + 1}) ${co}----------\n`));
+      return;
+    }
+
     // TODO no any's please!
     const previousComment: any = await provider
       .getPrComments(nataliConfig.pullRequestId)
       .then(coms => coms.find(isNataliComment));
-
-    const comment = comments.concat(NATALI_TAG).join("\n\n\n----\n\n");
 
     if (previousComment && failures.length === 0) {
       natali.happy(

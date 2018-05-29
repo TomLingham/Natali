@@ -11,9 +11,7 @@ import { logger, natali } from "./logging";
 yargs
   .option("pullrequest", {
     alias: "p",
-    describe: "The pull request or change ID associated with the pull request.",
-    demandOption: true,
-    requiresArg: true
+    describe: "The pull request or change ID associated with the pull request."
   })
   .command({
     command: "run [configPath]",
@@ -21,7 +19,7 @@ yargs
     desc: "Run the violation check with the provided config.",
     handler: async ({ configPath = "natali.yaml", pullrequest }) => {
       if (!pullrequest) {
-        process.exit(1);
+        natali.ashamed("No pullrequest specified. Running in no-comment mode.");
       }
 
       natali.nervous("Kindly inspecting your code. Please wait...");

@@ -6,6 +6,9 @@ import { template } from "../utils";
 
 export type NataliConfig = {
   pullRequestId: string,
+  repository?: {
+    ignore?: string
+  },
   provider: {
     name: string,
     config: { [string]: mixed }
